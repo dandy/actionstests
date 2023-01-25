@@ -1,0 +1,4 @@
+name: Deploy to prod
+on: workflow_dispatch
+concurrency:
+  group: "actiontests-prod"
