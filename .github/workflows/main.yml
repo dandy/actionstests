@@ -2,3 +2,30 @@ name: Deploy to prod
 on: workflow_dispatch
 concurrency:
   group: "actiontests-prod"
+jobs:
+  tag:
+    name: Tag the release
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v3
+     - run: |
+        echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
+        echo "- Lets add a bullet point" >> $GITHUB_STEP_SUMMARY
+        echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
+        echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
+      
+  slack:
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    needs:
+      - deploy-prod-live
+    steps:
+      - uses: actions/checkout@v2
+      - id: notify
+        uses: privacy-com/shared-github-actions/.github/actions/slack@main
+        with:
+          SERVICE: privacy-dashboard
+          ENVIRONMENT: production
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_PROD }}
+          COLOR: ${{(!contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')) && '#00FF00' || '#FF0000' }}
