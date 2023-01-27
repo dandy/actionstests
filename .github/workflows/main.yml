@@ -1,5 +1,5 @@
 name: Deploy to prod
-on: workflow_dispatch
+on: push
 concurrency:
   group: "actiontests-prod"
 jobs:
@@ -9,7 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
+          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_STEP_SUMMARY
           git log --no-merges --format=%B >> $GITHUB_STEP_SUMMARY
+          echo 'EOF' >> $GITHUB_STEP_SUMMARY
 
   # slack:
   #   runs-on: ubuntu-latest
