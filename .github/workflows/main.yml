@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: 'Get Message'
-      - run: |
+        run: |
           cat 'commit_message<<EOF' >> $GITHUB_OUTPUT
           echo "$(git log --oneline)" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
