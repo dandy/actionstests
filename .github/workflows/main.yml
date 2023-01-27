@@ -13,7 +13,7 @@ jobs:
           curl https://example.com >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
           echo $GITHUB_ENV
-          echo $GITHUB_ENV > $GITHUB_STEP_SUMMARY
+          echo ${{ env.JSON_RESPONSE }} > $GITHUB_STEP_SUMMARY
 
   # slack:
   #   runs-on: ubuntu-latest
