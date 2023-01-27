@@ -8,11 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: 'Get Message'
         id: 'changelog-ci'
         run: |
           git log --oneline > abc.log
-          echo "this is $(cat abc.log)"
           MY_STRING=$(cat abc.log)
           echo "MY_STRING<<EOF" >> $GITHUB_ENV
           echo "$MY_STRING" >> $GITHUB_ENV
