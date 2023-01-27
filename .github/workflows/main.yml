@@ -9,9 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_STEP_SUMMARY
+          echo "JSON_RESPONSE<<EOL" >> $GITHUB_STEP_SUMMARY
           git log --oneline >> $GITHUB_STEP_SUMMARY
-          echo 'EOF' >> $GITHUB_STEP_SUMMARY
+          echo "EOL" >> $GITHUB_STEP_SUMMARY
 
   # slack:
   #   runs-on: ubuntu-latest
