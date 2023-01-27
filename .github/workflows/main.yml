@@ -12,7 +12,7 @@ jobs:
         id: 'changelog-ci'
         run: |
           echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
-          echo "$(git log --oneline)" >> $GITHUB_OUTPUT
+          echo "$(git log --pretty=tformat:"%ai %s%n")" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
           
       - name: Get Changelog Output
