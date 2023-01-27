@@ -9,9 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          {
-           echo $(git log --oneline)
-          } >> GITHUB_STEP_SUMMARY
+           echo "$(git log --oneline)" >> GITHUB_STEP_SUMMARY
 
   # slack:
   #   runs-on: ubuntu-latest
