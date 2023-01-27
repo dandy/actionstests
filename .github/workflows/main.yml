@@ -7,7 +7,7 @@ jobs:
     name: Tag the release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: 'Get Message'
         run: |
           cat 'commit_message<<EOF' >> $GITHUB_OUTPUT
