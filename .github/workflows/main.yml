@@ -9,11 +9,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
-          curl https://example.com >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-          echo $GITHUB_ENV
-          echo ${{ env.JSON_RESPONSE }} > $GITHUB_STEP_SUMMARY
+          {
+           echo $(git log --oneline)
+          } >> GITHUB_STEP_SUMMARY
 
   # slack:
   #   runs-on: ubuntu-latest
