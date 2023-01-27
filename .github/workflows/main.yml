@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          cat 'commit message<<EOT' >> $GITHUB_STEP_SUMMARY
+          cat 'commit message<<EOF' >> $GITHUB_STEP_SUMMARY
           echo "$(git log --oneline)" >> $GITHUB_STEP_SUMMARY
           echo 'EOF' >> $GITHUB_STEP_SUMMARY
   # slack:
