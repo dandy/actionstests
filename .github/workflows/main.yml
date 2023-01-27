@@ -13,18 +13,7 @@ jobs:
       - name: 'Get Message'
         id: 'changelog-ci'
         run: |
-          git log --oneline > abc.log
-          MY_STRING=$(cat abc.log)
-          echo "MY_STRING<<EOF" >> $GITHUB_ENV
-          echo "$MY_STRING" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-      - name: display string
-        run: |
-          echo "The string is: ${{ env.MY_STRING }}"
-          
-      - name: Get Changelog Output
-        run: |
-          echo "${{ env.MY_STRING }}" >> $GITHUB_STEP_SUMMARY
+          echo "$(git log "48b761e..HEAD" --oneline --no-merges)" >$GITHUB_STEP_SUMMARY
 
   # slack:
   #   runs-on: ubuntu-latest
