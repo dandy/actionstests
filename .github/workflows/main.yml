@@ -9,8 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          git log --oneline
           cat <<EOT >>${GITHUB_STEP_SUMMARY}
+          ## Report 
+
+          - info 1 [some link](https://example.com)
+          - info 2
+
+          EOT
   # slack:
   #   runs-on: ubuntu-latest
   #   if: ${{ always() }}
