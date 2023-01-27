@@ -9,7 +9,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: |
-          echo $(git log --no-merges --format=%B) >> $GITHUB_STEP_SUMMARY
+          message = $(git log --no-merges --format=%B)
+          echo $message
+          echo ""
+          echo $(message) >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo $message >> $GITHUB_STEP_SUMMARY
+
 
   # slack:
   #   runs-on: ubuntu-latest
