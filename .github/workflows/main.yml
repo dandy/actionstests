@@ -1,34 +1,24 @@
 name: Deploy to prod
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag the build'
+        required: true
+        type: string
 concurrency:
   group: "actiontests-prod"
 jobs:
-  tag:
+  tag-the-release:
     name: Tag the release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: 'Get Message'
-        id: 'changelog-ci'
+      - name: Tag the release
+        if: ${{ !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
         run: |
-          lastReleaseTag=$(git describe --tags --abbrev=0)
-          lastReleasedCommit=$(git rev-list -n 1 $lastReleaseTag)
-          echo "$lastReleasedCommit"
-          echo "$(git log "$lastReleasedCommit..HEAD" --oneline --no-merges --format=%B)" >$GITHUB_STEP_SUMMARY
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git tag -a ${{ inputs.tag }} -m "Tagging the release ${{ inputs.tag }}"
+          git push --tags
 
-  # slack:
-  #   runs-on: ubuntu-latest
-  #   if: ${{ always() }}
-  #   needs:
-  #     - deploy-prod-live
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - id: notify
-  #       uses: privacy-com/shared-github-actions/.github/actions/slack@main
-  #       with:
-  #         SERVICE: privacy-dashboard
-  #         ENVIRONMENT: production
-  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_PROD }}
-  #         COLOR: ${{(!contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')) && '#00FF00' || '#FF0000' }}
