@@ -26,9 +26,12 @@ jobs:
           echo "| Commit | Author | Message |" >> $GITHUB_STEP_SUMMARY
           echo "| ------ | ------ | ------- |" >> $GITHUB_STEP_SUMMARY
           git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash >> $GITHUB_STEP_SUMMARY
-          step_summary=$
-          v=$(cat $(echo $GITHUB_STEP_SUMMARY))
-          echo "commit_message=$(v)" >> $GITHUB_OUTPUT
+          
+          echo "commit_message<<EOF" >> $GITHUB_OUTPUT
+          echo "| Commit | Author | Message |" >> $GITHUB_OUTPUT
+          echo "| ------ | ------ | ------- |" >> $GITHUB_OUTPUT
+          git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
           
   slackNotification:
     name: Slack Notification
