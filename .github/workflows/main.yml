@@ -13,7 +13,8 @@ jobs:
     name: Generate commit messages since last tagged release
     runs-on: ubuntu-latest
     continue-on-error: true
-    outputs: ${{ steps.generate-commit-message.outputs.commit_message }}
+    outputs: 
+      commit_message: ${{ steps.generate-commit-message.outputs.commit_message }}
     steps:
       - uses: actions/checkout@v2
         with:
