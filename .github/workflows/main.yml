@@ -26,7 +26,7 @@ jobs:
           echo "| Commit | Author | Message |" >> $GITHUB_STEP_SUMMARY
           echo "| ------ | ------ | ------- |" >> $GITHUB_STEP_SUMMARY
           git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash >> $GITHUB_STEP_SUMMARY
-          echo "commit_message=$GITHUB_STEP_SUMMARY" >> $GITHUB_OUTPUT
+          echo "commit_message=$(cat GITHUB_STEP_SUMMARY)" >> $GITHUB_OUTPUT
           
   slackNotification:
     name: Slack Notification
