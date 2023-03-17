@@ -1,11 +1,6 @@
 name: Deploy to prod
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag the build'
-        required: true
-        type: string
+  push:
 concurrency:
   group: "actiontests-prod"
 jobs:
@@ -30,7 +25,7 @@ jobs:
           echo "commit_message<<EOF" >> $GITHUB_OUTPUT
           echo "| Commit | Author | Message |" >> $GITHUB_OUTPUT
           echo "| ------ | ------ | ------- |" >> $GITHUB_OUTPUT
-          git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash >> $GITHUB_OUTPUT
+          echo "$(git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash)" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           
   slackNotification:
