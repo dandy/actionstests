@@ -23,4 +23,18 @@ jobs:
           echo "| Commit | Author | Message |" >> $GITHUB_STEP_SUMMARY
           echo "| ------ | ------ | ------- |" >> $GITHUB_STEP_SUMMARY
           git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash >> $GITHUB_STEP_SUMMARY
-          echo "</pre>" >> $GITHUB_STEP_SUMMARY
+          echo "commit_message<<EOF" >> $GITHUB_OUTPUT
+          echo "$(git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash)" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: ${{ steps.prepare-release-log.outputs.commit_message }}
+  
