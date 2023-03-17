@@ -13,11 +13,13 @@ jobs:
     name: Generate commit messages since last tagged release
     runs-on: ubuntu-latest
     continue-on-error: true
+    outputs: ${{ steps.generate-commit-message.outputs.commit_message }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Generate commit messages since last tagged commit
+        id: 'generate-commit-message'
         run: |
           promotedImageCommitHash=3c24d9c65ba99917d56411e0be84f06d3f5743a4
           echo "| Commit | Author | Message |" >> $GITHUB_STEP_SUMMARY
