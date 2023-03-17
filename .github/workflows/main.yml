@@ -39,5 +39,5 @@ jobs:
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: ${{ jobs.prepare-release-log.outputs.commit_message }}
+        SLACK_MESSAGE: ${{ needs.prepare-release-log.outputs.commit_message }}
   
