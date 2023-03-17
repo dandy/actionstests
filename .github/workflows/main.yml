@@ -20,10 +20,10 @@ jobs:
           promotedImageCommitHash=3c24d9c65ba99917d56411e0be84f06d3f5743a4
           echo "| Commit | Author | Message |" >> $GITHUB_STEP_SUMMARY
           echo "| ------ | ------ | ------- |" >> $GITHUB_STEP_SUMMARY
-          git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash >> $GITHUB_STEP_SUMMARY
+          echo $(git log --pretty=format:"| %h | %an | %s |" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash) >> $GITHUB_STEP_SUMMARY
           
           echo "commit_message<<EOF" >> $GITHUB_OUTPUT
-          git log --pretty=format:"%h%x09%an%x09%s" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash >> $GITHUB_OUTPUT
+          echo $(git log --pretty=format:"%h%x09%an%x09%s" 408264b24edae4bb3c24eaa73f7fcd3968981bfa..$promotedImageCommitHash) >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           
   slackNotification:
